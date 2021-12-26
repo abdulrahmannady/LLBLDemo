@@ -1,6 +1,9 @@
-﻿using Demo.DatabaseSpecific;
+﻿using Demo;
+using Demo.DatabaseSpecific;
+using Demo.EntityClasses;
 using Demo.Linq;
 using SD.LLBLGen.Pro.DQE.SqlServer;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using System.Data.SqlClient;
 using System.Linq;
@@ -18,15 +21,27 @@ namespace LLBLDemo
             using (var adapter = new DataAccessAdapter())
             {
                 var metaData = new LinqMetaData(adapter);
+                
                 var user = from u in metaData.User
-                            where u.Id == 1
-                            select u;
+                           where u.Id == 1
+                           select u;
 
-                //var userEntity = user.FirstOrDefault();
+                // Here I Add the joining to the UserEntity Class so I could access userRoles for this spacific user and Role too
+                var prefetchPath = new SD.LLBLGen.Pro.ORMSupportClasses.PrefetchPath2(EntityType.UserEntity);
+                var path = prefetchPath.Add(UserEntity.PrefetchPathUserRoles);
+                path.SubPath.Add(UserRoleEntity.PrefetchPathRole);
 
-                var userView = user.ProjectToUserView().FirstOrDefault();
-                var str = userView.UserRoles.FirstOrDefault().Role.NameArabic;
+                var userEntity = user.WithPath(prefetchPath).FirstOrDefault();
 
+                userEntity.UserRoles.FirstOrDefault().Role.NameArabic = "xxx";
+
+                adapter.SaveEntity(userEntity);
+
+
+                //var userView = user.ProjectToUserView().FirstOrDefault();
+                //userView.UserRoles.FirstOrDefault().Role.NameArabic = "xxx"; // this is illeagel as view is just for VIEWING data and query database don't meant to set values
+
+                //adapter.SaveEntity(userView); also SaveEntity() takes ClassEntity type not View type so this is enforced by ORM
             }
 
         }
