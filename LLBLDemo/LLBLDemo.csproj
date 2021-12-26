@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DatabaseGeneric\Demo.csproj" />
+    <ProjectReference Include="..\..\DatabaseSpecific\DemoDBSpecific.csproj" />
+    <ProjectReference Include="..\..\Views.Persistence\Views.Persistence.csproj" />
+    <ProjectReference Include="..\..\Views\Views.csproj" />
+  </ItemGroup>
+
+</Project>
