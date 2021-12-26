@@ -10,6 +10,10 @@
     <ProjectReference Include="..\..\DatabaseSpecific\DemoDBSpecific.csproj" />
     <ProjectReference Include="..\..\Views.Persistence\Views.Persistence.csproj" />
     <ProjectReference Include="..\..\Views\Views.csproj" />
+    <ProjectReference Include="..\Data\DatabaseGeneric\Demo.csproj" />
+    <ProjectReference Include="..\Data\DatabaseSpecific\DemoDBSpecific.csproj" />
+    <ProjectReference Include="..\Data\Views.Persistence\Views.Persistence.csproj" />
+    <ProjectReference Include="..\Data\Views\Views.csproj" />
   </ItemGroup>
 
 </Project>
